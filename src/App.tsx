@@ -1,6 +1,9 @@
 import { Zap, Shield, CheckCircle, Instagram, MapPin } from 'lucide-react';
+import { useState } from 'react';
 
 function App() {
+  const [showAllProducts, setShowAllProducts] = useState(false);
+
   return (
     <div className="min-h-screen bg-white">
       <header className="fixed top-0 left-0 right-0 z-50 py-4">
@@ -14,7 +17,7 @@ function App() {
               <a href="#products" className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition">Products</a>
               <a href="#services" className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition">Services</a>
               <a href="#materials" className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition">Materials</a>
-              <a href="#contact" className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition">Contact</a>
+              <a href="#contact" className="px-4 py-2 rounded-lg bg-white text-[#3d4f5c] hover:bg-gray-100 transition font-semibold shadow-md">Contact</a>
             </div>
           </div>
         </nav>
@@ -46,7 +49,7 @@ function App() {
         <div className="container mx-auto px-6 relative z-10">
           <h2 className="text-3xl font-bold text-[#3d4f5c] mb-12 text-center">Our Work</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="relative group">
+            <div className={`relative group ${!showAllProducts ? '' : ''}`}>
               <div className="absolute inset-0 bg-gradient-to-br from-slate-700/80 to-slate-900/80 backdrop-blur-xl rounded-lg transform transition-transform group-hover:scale-105"></div>
               <div className="relative bg-white/90 backdrop-blur-sm rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition">
               <img src="/sink1 copy.png" alt="Double Sink Station" className="w-full h-64 object-cover" />
@@ -76,6 +79,8 @@ function App() {
               </div>
               </div>
             </div>
+            {showAllProducts && (
+              <>
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-br from-slate-700/80 to-slate-900/80 backdrop-blur-xl rounded-lg transform transition-transform group-hover:scale-105"></div>
               <div className="relative bg-white/90 backdrop-blur-sm rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition">
@@ -146,7 +151,19 @@ function App() {
               </div>
               </div>
             </div>
+              </>
+            )}
           </div>
+          {!showAllProducts && (
+            <div className="text-center mt-12">
+              <button
+                onClick={() => setShowAllProducts(true)}
+                className="bg-[#3d4f5c] text-white px-8 py-3 rounded-lg hover:bg-[#2d3f4c] transition font-semibold shadow-lg"
+              >
+                Show All
+              </button>
+            </div>
+          )}
         </div>
       </section>
 

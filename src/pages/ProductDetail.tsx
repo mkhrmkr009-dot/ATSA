@@ -1,9 +1,10 @@
 import { useParams, Link } from 'react-router-dom';
-import { products } from '../data/products';
 import { ArrowLeft } from 'lucide-react';
+import { useProducts } from '../hooks/useProducts';
 
 export function ProductDetail() {
   const { slug } = useParams<{ slug: string }>();
+  const { products } = useProducts();
   const product = products.find(p => p.slug === slug);
 
   if (!product) {

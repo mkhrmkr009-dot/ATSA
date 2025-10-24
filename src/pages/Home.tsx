@@ -1,10 +1,13 @@
-import { Zap, Shield, CheckCircle, Instagram, MapPin } from 'lucide-react';
+import { Zap, Shield, CheckCircle, Instagram, MapPin, User, LogOut } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { products } from '../data/products';
+import { useProducts } from '../hooks/useProducts';
+import { useAuth } from '../contexts/AuthContext';
 
 export function Home() {
   const [showAllProducts, setShowAllProducts] = useState(false);
+  const { products } = useProducts();
+  const { user, isAuthenticated, logout } = useAuth();
   const displayedProducts = showAllProducts ? products : products.slice(0, 3);
 
   return (
@@ -16,11 +19,31 @@ export function Home() {
               <img src="/dfefwe.png" alt="ATSA Logo" className="w-14 h-14 object-contain" style={{mixBlendMode: 'lighten'}} />
               <span className="text-xl font-bold">ATSA</span>
             </div>
-            <div className="hidden md:flex gap-3">
+            <div className="hidden md:flex gap-3 items-center">
               <a href="#products" className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition">Products</a>
               <a href="#services" className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition">Services</a>
               <a href="#materials" className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition">Materials</a>
-              <a href="#contact" className="px-4 py-2 rounded-lg bg-white text-[#3d4f5c] hover:bg-gray-100 transition font-semibold shadow-md">Contact</a>
+              <a href="#contact" className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition">Contact</a>
+              {isAuthenticated ? (
+                <>
+                  <Link to="/manage" className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition flex items-center gap-2">
+                    <User className="w-4 h-4" />
+                    Manage
+                  </Link>
+                  <button
+                    onClick={logout}
+                    className="px-4 py-2 rounded-lg bg-red-500/80 hover:bg-red-600/80 transition flex items-center gap-2"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <Link to="/auth" className="px-4 py-2 rounded-lg bg-white text-[#3d4f5c] hover:bg-gray-100 transition font-semibold shadow-md flex items-center gap-2">
+                  <User className="w-4 h-4" />
+                  Login
+                </Link>
+              )}
             </div>
           </div>
         </nav>
